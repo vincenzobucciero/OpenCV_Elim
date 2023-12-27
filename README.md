@@ -38,4 +38,4 @@ Please refer to the Contribution Guidelines for more details.
 
 # License
 
-This project is licensed under the MIT License.
+This project is licensed under the GPL-3.0 license.
