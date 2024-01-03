@@ -6,6 +6,7 @@
 #include <iostream>
 
 #include "correlation.cpp"
+#include "convolution.cpp"
 
 using namespace std;
 using namespace cv;
@@ -41,12 +42,15 @@ int main(int argc, char**argv) {
     filter2D(image, filter2Dimg, image.type(), filtroMedia);
 
     Mat corrImg = correlation(image, filtroMedia);
+    Mat convImg = convolution(image, filtroMedia);
 
     imshow("original", image);
     waitKey(0);
     imshow("filter2D", filter2Dimg);
     waitKey(0);
     imshow("correlazione", corrImg);
+    waitKey(0);
+    imshow("convoluzione", convImg);
     waitKey(0);
 
     return 0;
