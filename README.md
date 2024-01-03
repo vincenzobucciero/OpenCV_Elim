@@ -39,3 +39,14 @@ Please refer to the Contribution Guidelines for more details.
 # License
 
 This project is licensed under the GPL-3.0 license.
+
+# EXTRA INFO
+
+In case of this error:
+```
+./myTest: symbol lookup error: /snap/core20/current/lib/x86_64-linux-gnu/libpthread.so.0: undefined symbol: __libc_pthread_init, version GLIBC_PRIVATE
+```
+Run this command in terminal:
+```
+unset GTK_PATH
+```
