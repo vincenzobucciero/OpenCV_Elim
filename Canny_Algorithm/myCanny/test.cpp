@@ -87,8 +87,10 @@ int main(int argc, char**argv) {
         exit(0);
     }
 
-    Mat imageOutput, imageOutputCannyCV;
+    Mat imageOutput, imageOutputGaussianBlur, imageOutputCannyCV;
     imshow("Original Image", imageInput);
+    //GaussianBlur(imageInput, imageOutputGaussianBlur, Size(3, 3), 0, 0);
+    //imshow("Image w GaussianBlur", imageOutputGaussianBlur);
     cannyAlgorithm(imageInput,imageOutput);
     imshow("Canny Algorithm", imageOutput);
     
