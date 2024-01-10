@@ -25,7 +25,7 @@ void nonMaximaSuppression(const Mat& mag, const Mat& ang, Mat& nmsOut) {
                     nmsOut.at<float>(x, y) = 0;
                 }
             } else if(angVal > 22.5 && angVal <= 67.5) {
-                if(nmsOut.at<float>(x, y) < nmsOut.at<float>(x+1, y+1) || nmsOut.at<float>(x, y) < nmsOut.at<float>(x-1, y+1)) {
+                if(nmsOut.at<float>(x, y) < nmsOut.at<float>(x+1, y+1) || nmsOut.at<float>(x, y) < nmsOut.at<float>(x-1, y-1)) {
                     nmsOut.at<float>(x, y) = 0;
                 }
             } else if(angVal > 67.5 && angVal <= 112.5) {
