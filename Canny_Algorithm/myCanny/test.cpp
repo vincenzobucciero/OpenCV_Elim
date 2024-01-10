@@ -4,7 +4,9 @@
 using namespace std;
 using namespace cv;
 
+//valore di soglia inferiore
 int lth = 60;
+//valore di soglia superiore
 int hth = 80;
 
 void magnitudeAndAngle(const Mat& imageInput, Mat& mag, Mat& ang) {
@@ -19,7 +21,7 @@ void magnitudeAndAngle(const Mat& imageInput, Mat& mag, Mat& ang) {
     phase(dx, dy, ang, true);
 }
 
-void NMS(const Mat& mag,const Mat& ang, Mat& nmsOut){
+void nonMaximaSuppression(const Mat& mag,const Mat& ang, Mat& nmsOut){
     copyMakeBorder(mag,nmsOut,1,1,1,1,BORDER_CONSTANT,Scalar(0));
     for(int y = 1; y < mag.rows; y++){
         for(int x = 1; x < mag.cols; x++){
@@ -52,8 +54,10 @@ void HThreshold(Mat& nmsOut, Mat& imageOutput){
     imageOutput = Mat::zeros(nmsOut.rows-2,nmsOut.cols-2,CV_8U);
     for(int y = 1; y < nmsOut.rows-1; y++){
         for(int x = 1; x < nmsOut.cols;x++){
-            if(nmsOut.at<float>(y,x) > hth) imageOutput.at<uchar>(y-1,x-1) = 255;
-            else if(nmsOut.at<float>(y,x)< lth) imageOutput.at<uchar>(y-1,x-1) = 0;
+            if(nmsOut.at<float>(y,x) > hth)
+                imageOutput.at<uchar>(y-1,x-1) = 255;
+            else if(nmsOut.at<float>(y,x)< lth) 
+                imageOutput.at<uchar>(y-1,x-1) = 0;
             else{
                 bool strongN = false;
                 for(int j = -1; j >= 1; j++){
@@ -70,9 +74,9 @@ void HThreshold(Mat& nmsOut, Mat& imageOutput){
 
 void cannyAlgorithm(const Mat& imageInput, Mat& imageOutput) {
     Mat blur, mag, ang, nmsOut;
-    GaussianBlur(imageInput, blur, Size(3,3), 0, 0);
+    GaussianBlur(imageInput, blur, Size(5,5), 0, 0);
     magnitudeAndAngle(imageInput, mag, ang);
-    NMS(mag, ang, nmsOut);
+    nonMaximaSuppression(mag, ang, nmsOut);
     HThreshold(nmsOut, imageOutput);
 }
 
@@ -98,8 +102,6 @@ int main(int argc, char**argv) {
     Canny(imageInput, imageOutputCannyCV, 30, 100);
     imshow("cvCanny", imageOutputCannyCV);
     waitKey(0);
-    waitKey();
-
 
     return 0;
 }
