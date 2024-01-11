@@ -3,7 +3,7 @@
 
 using namespace std;
 using namespace cv;
-
+//ylenia ti amo
 int lt = 30;
 int ht = 100;
 
