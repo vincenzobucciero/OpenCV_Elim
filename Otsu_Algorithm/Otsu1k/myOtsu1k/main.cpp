@@ -42,20 +42,37 @@ vector<float> normHistogram(const Mat& src) {
         }
     }
     for(int i = 0; i < 256; i++) {
-        hist.at(i) /= src.rows*src.cols;
+        hist.at(i) /= (src.rows*src.cols);
     }
     return hist;
 }
 
 int otsu1k(const Mat& src) {
     Mat blur;
-    GaussianBlur(src, blur, Szie(3,3), 0, 0);   //cancellazione rumore
+    GaussianBlur(src, blur, Size(3,3), 0, 0);   //cancellazione rumore
     vector<float> histogram = normHistogram(blur);
-    //probability
-    //cumulativeAvg
-    //globalAvg
-    //interVariance
-    //kstar
+    float prob = 0.0f, globAvg = 0.0f, cumAvg = 0.0f, interClassVariance = 0.0f, maxVariance = 0.0f;
+    int th = 0;
+
+    for(int i = 0; i < 256; i++) {
+        globAvg += (i+1)*histogram.at(i);
+    }
+    for(int k = 0; k < 256; k++) {
+        prob += histogram.at(k);
+        cumAvg += (k+1)*histogram.at(k);
+        float interClassNum = pow((globAvg*prob)-cumAvg, 2);
+        float interClassDen = prob*(1-prob);
+
+        if(interClassNum != 0)
+            interClassVariance = interClassNum/interClassDen;
+        else
+            interClassVariance = 0;
+        if(interClassVariance > maxVariance) {
+            maxVariance = interClassVariance;
+            th = k;
+        }
+    }
+    return th;
 }
 
 
@@ -66,13 +83,13 @@ int main(int argc, char**argv) {
     }
     Mat src = imread(argv[1], IMREAD_COLOR);
     if(src.empty()) {
-        cout << "can not open" << argv[1] << endl;
+        cout << "can not open/read image" << argv[1] << endl;
         exit(0);
     }
     imshow("original image", src);
     Mat dest;
-    //otsu
-    imshow("houghlines image", dest);
+    threshold(src, dest, otsu1k(src), 255, THRESH_BINARY);
+    imshow("otsu1k image", dest);
     waitKey(0);
 
     return 0;
