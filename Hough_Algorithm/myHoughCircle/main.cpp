@@ -38,9 +38,9 @@ void voteCircle(const Mat& edge, Mat& votingSpace){
 
 vector<tuple<int,int,int>> detectCircle(const Mat& src,const Mat& votingSpace){
     vector<tuple<int,int,int>> detected;
-    for(auto b = 0; b < src.rows; b++){
-        for(auto a = 0; a < src.cols; a++){
-            for(auto r = 0; r <= rMax - rMin; r++){
+    for(int b = 0; b < src.rows; b++){
+        for(int a = 0; a < src.cols; a++){
+            for(int r = 0; r <= rMax - rMin; r++){
                 if(votingSpace.at<uchar>(b,a,r) > th)
                     detected.push_back(make_tuple(b,a,r+rMin));
             }
