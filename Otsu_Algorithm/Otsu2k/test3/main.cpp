@@ -80,9 +80,11 @@ void myThreshold(const Mat& src, Mat& dest) {
     }
 }
 
+//ciao <3, ho fame 
+
 int main(int argc, char**argv) {
     if(argc < 2) {
-        cout << "error" << endl;
+        cout << "error, ha ha ha c'è un errore" << endl;
         exit(0);
     }
     Mat src = imread(argv[1], IMREAD_GRAYSCALE);
@@ -90,10 +92,10 @@ int main(int argc, char**argv) {
         cout << "can not open/read image" << argv[1] << endl;
         exit(0);
     }
-    imshow("original image", src);
+    imshow("original image, bravo, sei originale!", src);
     Mat dest;
     myThreshold(src, dest);
-    imshow("otsu2k", dest);
+    imshow("otsu2k, ciao mi chiamo otsu2k", dest);
 
     waitKey(0);
 
