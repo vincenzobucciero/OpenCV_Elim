@@ -31,9 +31,9 @@ Ensure you have OpenCV installed on your system. If not, follow the instructions
  git clone https://github.com/your-username/OpenCV_Elim.git  
  ```
  2. Navigate to the directory:
-    ```
-    cd OpenCV_Elim
-    ```
+```
+cd OpenCV_Elim
+```
  3. Explore the exercises and projects in their respective folders.
 
 ---
